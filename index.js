@@ -5,7 +5,7 @@ const request = require('request');
 const app = express();
 const getCapability = '/service=wms?request=getCapabilities';
 const getMap = '/service=wms?request=getMap&';
-// URL de teste: http://sistemas.anatel.gov.br:80/geoserver/ANATEL/wms
+// URL de teste: http://www.geoservicos.inde.gov.br/geoserver/BNDES/wms
 
 app.use(express.json());
 
@@ -21,11 +21,16 @@ app.post('/get-layers', async (req, res) => {
             parseString(XMLGrandao, (err, result) => {
                 JSONGrandao = result;
             });
-            
-            let layers = JSONGrandao.WMS_Capabilities.Capability[0].Layer[0].Layer;
+            if (JSONGrandao.WMS_Capabilities.Capability[0].Layer[0].Layer) {
+                let layers = JSONGrandao.WMS_Capabilities.Capability[0].Layer[0].Layer;
+                res.statusCode = 200;
+                res.send(layers);
+            } else {
+                res.statusCode = 500;
+                resposta = {res: `Não foi possível acessar as layers da URL "${URL}"`}
+                res.send(resposta);
+            }
 
-            res.statusCode = 200;
-            res.send(layers);
         } 
     });
 });

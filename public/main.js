@@ -2,8 +2,7 @@ const serverURL = 'http://localhost:3000';
 
 //'/service=wms?request=getCapabilities'
 
-// URL de teste: http://sistemas.anatel.gov.br:80/geoserver/ANATEL/wms
-
+// URL de teste: http://www.geoservicos.inde.gov.br/geoserver/BNDES/wms
 function getThoseLayersMF() {
     const URLInput = $('#URL').val();
 
@@ -26,7 +25,8 @@ function whereAreMyLayers(URL, complete) {
         body: JSON.stringify(URL)
     })
         .then((response) => {
-            if (response.status === 500) {
+            if (response.status == 500) {
+                alert(response.body.res);
             } else {
                 return response.json()
                 .then((body) => {
