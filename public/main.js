@@ -25,8 +25,11 @@ function whereAreMyLayers(URL, complete) {
         body: JSON.stringify(URL)
     })
         .then((response) => {
-            if (response.status == 500) {
-                alert(response.body.res);
+            if (response.status == 404) {
+                return response.json()
+                .then((body) => {
+                    alert(body.res);
+                });
             } else {
                 return response.json()
                 .then((body) => {

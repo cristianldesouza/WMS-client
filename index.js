@@ -15,6 +15,7 @@ app.post('/get-layers', async (req, res) => {
     const URL = req.body.URL;
 
     request(`${URL}${getCapability}`, function (error, response, body) {
+
         if(!error && response.statusCode == 200) {
             const XMLGrandao = body;
             let JSONGrandao = {};
@@ -25,13 +26,13 @@ app.post('/get-layers', async (req, res) => {
                 let layers = JSONGrandao.WMS_Capabilities.Capability[0].Layer[0].Layer;
                 res.statusCode = 200;
                 res.send(layers);
-            } else {
-                res.statusCode = 500;
-                resposta = {res: `Não foi possível acessar as layers da URL "${URL}"`}
-                res.send(resposta);
-            }
+            } 
 
-        } 
+        } else {
+            res.statusCode = 404;
+            resposta = {res: `Não foi possível acessar as layers da URL "${URL}"`}
+            res.send(resposta);
+        }
     });
 });
 
