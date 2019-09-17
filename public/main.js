@@ -60,35 +60,23 @@ function getThatImageMF() {
         layer: layerName,    
     }
 
-    fetch(`${serverURL}/get-parameters`, {
+    fetch(`${serverURL}/get-that-image`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
     })
         .then((response) => {
-            if (response.status === 500) {
-                console.log('DEU RUIM IRMAO');
-            } else {
-                return response.json()
-                .then((body) => {
-                    
-                    takeCareOfThatImageMF(body);
-                });
-            }
-        })
-        .catch()
-}
+            if (response.status === 404) {
+                $('body').css('cursor', '');
+                $('#URL').css('cursor', '');
+                $('#NOMEDALAYERMF').css('cursor', '');
+                $('#botaozao').css('cursor', '');
+                $('#botaozao').attr('disabled', false);
+                $('#botaozao').css('background-color', '');
+                $('#botaozao').css('color', '');
+                $('#NOMEDALAYERMF').attr('disabled', false);
 
-function takeCareOfThatImageMF(bboxcrs){
-
-    fetch(`${serverURL}/get-image`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(bboxcrs)
-    })
-        .then((response) => {
-            if (response.status === 500) {
-                console.log('DEU RUIM IRMAO');
+                alert('Não foi possivel capturar PNG desta Layer.');
             } else {
                 return response.json()
                 .then((body) => {
@@ -101,4 +89,33 @@ function takeCareOfThatImageMF(bboxcrs){
 
 function theImageIsHere(image) {
     $('#hereTheImageLays').attr('src', image);
+
+    setTimeout(() => {
+        $('body').css('cursor', '');
+        $('#URL').css('cursor', '');
+        $('#NOMEDALAYERMF').css('cursor', '');
+        $('#botaozao').css('cursor', '');
+        $('#botaozao').attr('disabled', false);
+        $('#botaozao').css('background-color', '');
+        $('#botaozao').css('color', '');
+        $('#NOMEDALAYERMF').attr('disabled', false);
+    }, 500);
+
+}
+
+async function getThatImageMFucker() {
+    $('body').css('cursor', 'wait');
+    $('#URL').css('cursor', 'wait');
+    $('#NOMEDALAYERMF').css('cursor', 'wait');
+    $('#botaozao').css('cursor', 'wait');
+    $('#botaozao').attr('disabled', true);
+    $('#botaozao').css('background-color', '#dddddd');
+    $('#botaozao').css('color', 'black');
+    $('#NOMEDALAYERMF').attr('disabled', true);
+
+
+
+    await getThatImageMF();
+
+
 }

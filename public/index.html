@@ -11,19 +11,19 @@
     <script src="main.js"></script>
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="containerHUE">
         <div class="row header">
             <form>
                 <div class="form-group header-container">
                   <input type="text" class="input" id="URL" name="URL" placeholder="URL da API">
-                  <button type="button" class="btn btn-primary" onclick="getThoseLayersMF()">Verificar Layers</button>
+                  <button type="button" class="btn btn-primary" id="botaozao" onclick="getThoseLayersMF()">Verificar Layers</button>
                 </div>
             </form>
         </div>
         <div class="row">
             <div class="col"></div>
             <div class="col-5">
-                <select class="form-control" id="NOMEDALAYERMF" onchange="getThatImageMF()"></select>
+                <select class="form-control" id="NOMEDALAYERMF" onchange="getThatImageMFucker()"></select>
             </div>
             <div class="col"></div>
             </div>      

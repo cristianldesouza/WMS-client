@@ -26,7 +26,11 @@ app.post('/get-layers', async (req, res) => {
                 let layers = JSONGrandao.WMS_Capabilities.Capability[0].Layer[0].Layer;
                 res.statusCode = 200;
                 res.send(layers);
-            } 
+            } else {
+                res.statusCode = 404;
+                resposta = {res: `Não foi possível acessar as layers da URL "${URL}"`}
+                res.send(resposta);
+            }
 
         } else {
             res.statusCode = 404;
@@ -36,7 +40,7 @@ app.post('/get-layers', async (req, res) => {
     });
 });
 
-app.post('/get-parameters', async function (req, res) {
+app.post('/get-that-image', async function (req, res) {
 
     request(`${req.body.URL}${getCapability}`, function (error, response, body) {
         if(!error && response.statusCode == 200) {
@@ -52,32 +56,23 @@ app.post('/get-parameters', async function (req, res) {
                 if(layers[i].Name == req.body.layer){
                     let crs = layers[i].CRS[0];
                     let bbox = layers[i].EX_GeographicBoundingBox[0].westBoundLongitude[0] + ',' + layers[i].EX_GeographicBoundingBox[0].eastBoundLongitude[0] + ',' + layers[i].EX_GeographicBoundingBox[0].southBoundLatitude[0] + ',' + layers[i].EX_GeographicBoundingBox[0].northBoundLatitude[0];
+                    let layer = req.body.layer;
+                    let URL = req.body.URL;
+                    URL = newURL = `${URL}${getMap}WIDTH=400&HEIGHT=400&crs=${crs}&bbox=${bbox}&format=image%2Fpng&layers=${layer}`;
+                    
                     let rexpoxta = {
-                        crs: crs,
-                        bbox: bbox,
-                        layer: req.body.layer,
-                        URL: req.body.URL,
-                    }                    
+                        src: URL,
+                    }
+                    
                     res.statusCode = 200;
                     res.send(rexpoxta);
                 }
             }
 
-        } 
+        } else {
+            res.statusCode = 404;
+        }
     });
-})
-
-app.post('/get-image', async function (req, res){
-    let crs = req.body.crs;
-    let bbox = req.body.bbox;
-    let layer = req.body.layer;
-    let URL = req.body.URL;
-    URL = newURL = `${URL}${getMap}WIDTH=400&HEIGHT=400&crs=${crs}&bbox=${bbox}&format=image%2Fpng&layers=${layer}`;
-    let respoxta = {
-        src: URL,
-    }
-
-    res.send(respoxta);
 })
 
 app.listen(3000, () => {
