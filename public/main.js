@@ -2,7 +2,7 @@ const serverURL = 'http://localhost:3000';
 
 //'/service=wms?request=getCapabilities'
 
-// URL de teste: http://www.geoservicos.inde.gov.br/geoserver/BNDES/wms
+// URL de teste: http://www.geoservicos.inde.gov.br/geoserver/SPM/wms
 function getThoseLayersMF() {
     const URLInput = $('#URL').val();
 
@@ -50,6 +50,7 @@ function takeThoseLayers(layers) {
         opt.value = layers[i].Name;
         select.appendChild(opt);
     }    
+    $('#NOMEDALAYERMF').removeClass('d-none');
 }
 
 function getThatImageMF() {
@@ -89,7 +90,7 @@ function getThatImageMF() {
 
 function theImageIsHere(image) {
     $('#hereTheImageLays').attr('src', image);
-
+    $('#imageMF').removeClass('d-none');
     setTimeout(() => {
         $('body').css('cursor', '');
         $('#URL').css('cursor', '');

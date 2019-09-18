@@ -12,10 +12,11 @@
 </head>
 <body>
     <div class="container" id="containerHUE">
+        <h3 class="title">OWS Client</h3>
         <div class="row header">
             <form>
                 <div class="form-group header-container">
-                  <input type="text" class="input" id="URL" name="URL" placeholder="URL da API">
+                  <input type="text" class="input" id="URL" name="URL" value="http://www.geoservicos.inde.gov.br/geoserver/SPM/wms" placeholder="URL da API">
                   <button type="button" class="btn btn-primary" id="botaozao" onclick="getThoseLayersMF()">Verificar Layers</button>
                 </div>
             </form>
@@ -23,13 +24,15 @@
         <div class="row">
             <div class="col"></div>
             <div class="col-5">
-                <select class="form-control" id="NOMEDALAYERMF" onchange="getThatImageMFucker()"></select>
+                <select class="form-control d-none" id="NOMEDALAYERMF" onchange="getThatImageMFucker()">
+                    <option value="">Selecione a Layer</option>
+                </select>
             </div>
             <div class="col"></div>
             </div>      
             <input type="hidden" id="bbox">
         </div>
-        <div class="imageMF" id="imageMF">
+        <div class="imageMF d-none" id="imageMF">
            <img src="" id='hereTheImageLays'/> 
         </div>
     </div>
@@ -43,7 +46,13 @@
         width: 420px;
         margin: auto;
         margin-top: 40px;
-        border: 1px solid black;
+    }
+    .d-none{
+        display: none;
+    }
+    .title{
+        text-align: center;
+        margin-bottom: 20px;
     }
 </style>
 </html>

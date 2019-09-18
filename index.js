@@ -5,7 +5,7 @@ const request = require('request');
 const app = express();
 const getCapability = '/service=wms?request=getCapabilities';
 const getMap = '/service=wms?request=getMap&';
-// URL de teste: http://www.geoservicos.inde.gov.br/geoserver/BNDES/wms
+// URL de teste: http://www.geoservicos.inde.gov.br/geoserver/SPM/wms
 
 app.use(express.json());
 
